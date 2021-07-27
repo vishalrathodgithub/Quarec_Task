@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock title %}
+{% block body %}
+<div class="container pt-5 align-middle">
+    <h4>Add Movie</h4>
+
+    <form action='/create' method="POST">{{ form.csrf_token() }}
+        <div class="form-group">
+            {{ form.hidden_tag() }}
+
+            {{ form.name.label(class="form-control-label") }}
+            {{ form.name(class="form-control form-control-lg") }}
+        </div>
+        <div class="form-group">
+
+            {{ form.timing.label(class="form-control-label") }}
+            {{ form.timing(class="form-control form-control-lg") }}
+        </div>
+        <div class="form-group">
+
+            {{ form.location.label(class="form-control-label") }}
+            {{ form.location(class="form-control form-control-lg") }}
+        </div>
+        <br>
+
+        <div class="form-group">
+
+            <button type="submit" class="btn btn-dark">Add Movie</button>
+        </div>
+    </form>
+</div>
+</form>
+</div>
+
+<div class="container my-3">
+    <h2>Your Movies</h2>
+
+    {% if movie|length == 0 %}
+
+    <div class="alert alert-dark" role="alert">
+        No Movies found. Add your first Movies now!
+    </div>
+    {% else %}
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Movie Name</th>
+            <th scope="col">Timing</th>
+            <th scope="col">Location</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for obj in movie %}
+        <tr>
+            <th scope="row">{{loop.index}}</th>
+            <td>{{obj.name}}</td>
+            <td>{{obj.timing}}</td>
+            <td>{{obj.location}}</td>
+            <td>
+                <a href="/update/{{obj.id}}" type="button" class="btn btn-outline-dark btn-sm mx-1">Update</button>
+            </td>
+            <td>
+                <a href="/delete/{{obj.id}}" type="button" class="btn btn-outline-dark btn-sm mx-1">Delete</button>
+
+            </td>
+        </tr>
+
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+
+</div>
+
+{% endblock body %}
